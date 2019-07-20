@@ -88,4 +88,22 @@ class Chapter2Spec extends WordSpec with Matchers {
 
   }
 
+  "curry" should {
+    "work" in {
+      Chapter2.curry((a: Int, b: Int) => a + b)(2)(3) shouldEqual 5
+    }
+  }
+
+  "uncurry" should {
+    "work" in {
+      Chapter2.uncurry((a: Int) => (b:Int) => a + b)(2, 3) shouldEqual 5
+    }
+  }
+
+  "compose" should {
+    "work" in {
+      Chapter2.compose((b: Int) => b.toString, (a: Int) => a * a)(3) shouldEqual "9"
+    }
+  }
+
 }
