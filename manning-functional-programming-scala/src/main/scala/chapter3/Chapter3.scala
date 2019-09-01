@@ -17,13 +17,18 @@ case class Cons[+A](h: A, t: List[A]) extends List[A] {
 
   def setHead[B >: A](elem: B): List[B] = Cons(elem, Cons(h, t))
 
-  override def drop(n: Int): List[A] = n match {
+  def drop(n: Int): List[A] = n match {
     case i if i <= 0 => this
     case _ => t.drop(n - 1)
   }
 }
 
 object List {
+
+  def apply[A](as: A*): List[A] =
+    if (as.isEmpty) Nil
+    else Cons(as.head, apply(as.tail: _*))
+
   def sum(ints: List[Int]): Int = ints match {
     case Nil => 0
     case Cons(x,xs) => x + sum(xs)
@@ -35,9 +40,21 @@ object List {
     case Cons(x,xs) => x * product(xs)
   }
 
+  def tail[A](l: List[A]): List[A] = l match {
+    case Nil => Nil
+    case Cons(_, Nil) => Nil
+    case Cons(_, t) => t
+  }
 
+  def setHead[A](l: List[A], h: A): List[A] = l match {
+    case Nil => Cons(h, Nil)
+    case Cons(ph, t) => Cons(h, Cons(ph, t))
+  }
 
-  def apply[A](as: A*): List[A] =
-    if (as.isEmpty) Nil
-    else Cons(as.head, apply(as.tail: _*))
+  def drop[A](l: List[A], n: Int): List[A] = l match {
+    case Nil => Nil
+    case Cons(_, _) if n <= 0 => l
+    case Cons(_, t) if n > 0 => drop(t, n - 1)
+  }
+
 }
