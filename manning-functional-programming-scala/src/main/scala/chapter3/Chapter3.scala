@@ -2,10 +2,14 @@ package chapter3
 
 sealed trait List[+A] {
   def tail: List[A]
+
   def setHead[B >: A](elem: B): List[B]
+
   def drop(n: Int): List[A]
+
   def dropWhile[B >: A](f: B => Boolean): List[B]
 }
+
 case object Nil extends List[Nothing] {
   def tail(): List[Nothing] = Nil
 
@@ -15,6 +19,7 @@ case object Nil extends List[Nothing] {
 
   def dropWhile[B >: Nothing](f: B => Boolean): List[B] = Nil
 }
+
 case class Cons[+A](h: A, t: List[A]) extends List[A] {
   def tail(): List[A] = t
 
@@ -36,13 +41,13 @@ object List {
 
   def sum(ints: List[Int]): Int = ints match {
     case Nil => 0
-    case Cons(x,xs) => x + sum(xs)
+    case Cons(x, xs) => x + sum(xs)
   }
 
   def product(ds: List[Double]): Double = ds match {
     case Nil => 1.0
     case Cons(0.0, _) => 0.0
-    case Cons(x,xs) => x * product(xs)
+    case Cons(x, xs) => x * product(xs)
   }
 
   def tail[A](l: List[A]): List[A] = l match {
@@ -64,7 +69,19 @@ object List {
 
   def dropWhile[A](l: List[A], f: A => Boolean): List[A] = l match {
     case Nil => Nil
-    case Cons(h, t) => if(f(h)) dropWhile(t, f) else l
+    case Cons(h, t) => if (f(h)) dropWhile(t, f) else l
+  }
+
+  def append[A](a1: List[A], a2: List[A]): List[A] =
+    a1 match {
+      case Nil => a2
+      case Cons(h, t) => Cons(h, append(t, a2))
+    }
+
+  def init[A](l: List[A]): List[A] = l match {
+    case Nil => Nil
+    case Cons(h, Nil) => List(h)
+    case Cons(h, t) => init(t)
   }
 
 }
