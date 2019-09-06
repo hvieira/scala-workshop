@@ -84,4 +84,24 @@ class Chapter3Spec extends WordSpec with Matchers {
     }
   }
 
+  "3.5 dropWhile" must {
+
+    "return a list with dropped elements while predicate holds" in {
+      val predicate = (x: Int) => x < 3
+
+      List().dropWhile(predicate) should be(List())
+      List(1).dropWhile(predicate) should be(List())
+      List(1,2).dropWhile(predicate) should be(List())
+      List(1,2,3).dropWhile(predicate) should be(List(3))
+      List(3,1).dropWhile(predicate) should be(List(3,1))
+      // --
+      List.dropWhile(List(), predicate) should be(List())
+      List.dropWhile(List(1), predicate) should be(List())
+      List.dropWhile(List(1,2), predicate) should be(List())
+      List.dropWhile(List(1,2,3), predicate) should be(List(3))
+      List.dropWhile(List(3,1), predicate) should be(List(3,1))
+    }
+
+  }
+
 }
