@@ -45,9 +45,9 @@ class Chapter3Spec extends WordSpec with Matchers {
       List.setHead(List(), 1) should be(List(1))
     }
     "define a list with the parameter as head if its a non empty list" in {
-      List(1).setHead(0) should be(List(0,1))
+      List(1).setHead(0) should be(List(0, 1))
       // --
-      List.setHead(List(1), 0) should be(List(0,1))
+      List.setHead(List(1), 0) should be(List(0, 1))
     }
   }
 
@@ -68,19 +68,19 @@ class Chapter3Spec extends WordSpec with Matchers {
     }
 
     "return a list with the first n dropped elements" in {
-      List().drop(10000) should be (List())
-      List(1).drop(1) should be (List())
-      List(1,1).drop(1) should be (List(1))
-      List(1,1,1).drop(2) should be (List(1))
-      List(1,1,1).drop(3) should be (List())
-      List(1,1,1,1,1).drop(3) should be (List(1,1))
+      List().drop(10000) should be(List())
+      List(1).drop(1) should be(List())
+      List(1, 1).drop(1) should be(List(1))
+      List(1, 1, 1).drop(2) should be(List(1))
+      List(1, 1, 1).drop(3) should be(List())
+      List(1, 1, 1, 1, 1).drop(3) should be(List(1, 1))
       // --
-      List.drop(List(), 10000) should be (List())
-      List.drop(List(1), 1) should be (List())
-      List.drop(List(1,1), 1) should be (List(1))
-      List.drop(List(1,1,1), 2) should be (List(1))
-      List.drop(List(1,1,1), 3) should be (List())
-      List.drop(List(1,1,1,1,1), 3) should be (List(1,1))
+      List.drop(List(), 10000) should be(List())
+      List.drop(List(1), 1) should be(List())
+      List.drop(List(1, 1), 1) should be(List(1))
+      List.drop(List(1, 1, 1), 2) should be(List(1))
+      List.drop(List(1, 1, 1), 3) should be(List())
+      List.drop(List(1, 1, 1, 1, 1), 3) should be(List(1, 1))
     }
   }
 
@@ -91,15 +91,15 @@ class Chapter3Spec extends WordSpec with Matchers {
 
       List().dropWhile(predicate) should be(List())
       List(1).dropWhile(predicate) should be(List())
-      List(1,2).dropWhile(predicate) should be(List())
-      List(1,2,3).dropWhile(predicate) should be(List(3))
-      List(3,1).dropWhile(predicate) should be(List(3,1))
+      List(1, 2).dropWhile(predicate) should be(List())
+      List(1, 2, 3).dropWhile(predicate) should be(List(3))
+      List(3, 1).dropWhile(predicate) should be(List(3, 1))
       // --
       List.dropWhile(List(), predicate) should be(List())
       List.dropWhile(List(1), predicate) should be(List())
-      List.dropWhile(List(1,2), predicate) should be(List())
-      List.dropWhile(List(1,2,3), predicate) should be(List(3))
-      List.dropWhile(List(3,1), predicate) should be(List(3,1))
+      List.dropWhile(List(1, 2), predicate) should be(List())
+      List.dropWhile(List(1, 2, 3), predicate) should be(List(3))
+      List.dropWhile(List(3, 1), predicate) should be(List(3, 1))
     }
 
   }
@@ -109,8 +109,19 @@ class Chapter3Spec extends WordSpec with Matchers {
     "return a list all but the last element" in {
       List.init(List()) should be(List())
       List.init(List(1)) should be(List(1))
-      List.init(List(1,2)) should be(List(2))
-      List.init(List(3,5,1)) should be(List(1))
+      List.init(List(1, 2)) should be(List(2))
+      List.init(List(3, 5, 1)) should be(List(1))
+    }
+
+  }
+
+  "3.9 length" must {
+
+    "return the length of the list" in {
+      List.length(List()) should be(0)
+      List.length(List(1)) should be(1)
+      List.length(List(1, 1, 7)) should be(3)
+      List.length(List(1, 1, 2, 3, 5, 8, 13)) should be(7)
     }
 
   }
