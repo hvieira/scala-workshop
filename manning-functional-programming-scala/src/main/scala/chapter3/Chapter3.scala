@@ -100,4 +100,34 @@ object List {
   def length[A](as: List[A]): Int =
     foldRight(as, 0)((_, count) => count + 1)
 
+  @annotation.tailrec
+  def foldLeft[A, B](as: List[A], z: B)(f: (B, A) => B): B =
+    as match {
+      case Nil => z
+      case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
+    }
+
+  def reverse[A](l: List[A]): List[A] =
+    foldLeft(l, List[A]())((acc, elem) => acc.setHead(elem))
+
+  def foldRightViaLeft[A, B](l: List[A], z: B)(f: (A, B) => B): B =
+    foldLeft(reverse(l), z)((b, a) => f(a, b))
+
+  def foldLeftViaRight[A, B](l: List[A], z: B)(f: (B, A) => B): B =
+    foldRight(l, (b: B) => b)((a, g) => b => g(f(b, a)))(z)
+
+  /**
+    * List("foo", "bar", "z") | AGGR "acc" | f concat
+    * (z, ID)                                         -> B => ID(concat(B,z))
+    * (bar, B => ID(concat(B,z)))                     -> B => ID(concat(pB,z))(concat(B,bar))
+    * (foo, B => ID(concat(pB,z))(concat(B,bar)))     -> B => ID(concat(ppB,z))(concat(pB,bar))(concat(B,foo))
+    *
+    * feed in "acc"
+    * ID(concat(ppB,z))(concat(pB,bar))(concat(acc,foo))
+    * ID(concat(ppB,z))(concat(accfoo,bar))
+    * ID(concat(accfoobar,z))
+    * ID(accfoobarz)
+    * accfoobarz
+    */
+
 }

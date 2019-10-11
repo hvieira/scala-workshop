@@ -126,4 +126,35 @@ class Chapter3Spec extends WordSpec with Matchers {
 
   }
 
+  "3.10 foldLeft" must {
+
+    val lengthFunction = (c: Int, _: Int) => c + 1
+
+    "apply the function from left to right" in {
+      List.foldLeft(List(), 0)(lengthFunction) should be(0)
+      List.foldLeft(List(1), 0)(lengthFunction) should be(1)
+      List.foldLeft(List(1, 1, 7), 0)(lengthFunction) should be(3)
+      List.foldLeft(List(1, 1, 2, 3, 5, 8, 13), 0)(lengthFunction) should be(7)
+
+      List.foldLeft(List("World", "!"), "Hello ")(_ + _) should be("Hello World!")
+    }
+
+  }
+
+  "3.12 reverse" must {
+
+    "reverse the list" in {
+      List.reverse(List()) should be(List())
+      List.reverse(List(1)) should be(List(1))
+      List.reverse(List(3, 1, 7)) should be(List(7,1,3))
+    }
+
+  }
+
+  "3.13 fold left via right" must {
+    "work" in {
+      List.foldLeftViaRight(List("foo", "bar"), "")(_ + _) should be("foobar")
+    }
+  }
+
 }
