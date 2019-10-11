@@ -146,7 +146,7 @@ class Chapter3Spec extends WordSpec with Matchers {
     "reverse the list" in {
       List.reverse(List()) should be(List())
       List.reverse(List(1)) should be(List(1))
-      List.reverse(List(3, 1, 7)) should be(List(7,1,3))
+      List.reverse(List(3, 1, 7)) should be(List(7, 1, 3))
     }
 
   }
@@ -173,6 +173,17 @@ class Chapter3Spec extends WordSpec with Matchers {
       List.appendViaFoldRight(List(1), List()) should be(List(1))
       List.appendViaFoldRight(List(), List(1)) should be(List(1))
       List.appendViaFoldRight(List(1, 2), List(3)) should be(List(1, 2, 3))
+    }
+  }
+
+  "3.15 flatten" must {
+    "flatten nested lists" in {
+      List.flatten(List(List(), List())) should be(List())
+      List.flatten(List(List(1), List())) should be(List(1))
+      List.flatten(List(List(), List(1))) should be(List(1))
+      List.flatten(List(List(1), List(2))) should be(List(1, 2))
+      List.flatten(List(List(1, 2, 3), List(4, 5, 6))) should be(List(1, 2, 3, 4, 5, 6))
+      List.flatten(List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9))) should be(List(1, 2, 3, 4, 5, 6, 7, 8, 9))
     }
   }
 

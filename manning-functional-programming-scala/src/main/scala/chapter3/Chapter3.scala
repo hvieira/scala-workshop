@@ -136,4 +136,6 @@ object List {
   def appendViaFoldRight[A](appendTo: List[A], more: List[A]): List[A] =
     List.foldRight(appendTo, more)((a,b) => Cons(a, b))
 
+  def flatten[A](l: List[List[A]]): List[A] =
+    List.foldLeft(l, List[A]())((b, a) => List.append(b, a))
 }
