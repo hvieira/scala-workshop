@@ -130,4 +130,10 @@ object List {
     * accfoobarz
     */
 
+  def appendViaFoldLeft[A](appendTo: List[A], more: List[A]): List[A] =
+    List.foldLeft(List.reverse(appendTo), more)((b,a) => Cons(a, b))
+
+  def appendViaFoldRight[A](appendTo: List[A], more: List[A]): List[A] =
+    List.foldRight(appendTo, more)((a,b) => Cons(a, b))
+
 }

@@ -157,4 +157,23 @@ class Chapter3Spec extends WordSpec with Matchers {
     }
   }
 
+  "3.14 append via fold left" must {
+    "work" in {
+      List.appendViaFoldLeft(List(), List()) should be(List())
+      List.appendViaFoldLeft(List(1), List()) should be(List(1))
+      List.appendViaFoldLeft(List(), List(1)) should be(List(1))
+      List.appendViaFoldLeft(List(1), List(2)) should be(List(1, 2))
+      List.appendViaFoldLeft(List(1, 2), List(3)) should be(List(1, 2, 3))
+    }
+  }
+
+  "3.14 append via fold right" must {
+    "work" in {
+      List.appendViaFoldRight(List(), List()) should be(List())
+      List.appendViaFoldRight(List(1), List()) should be(List(1))
+      List.appendViaFoldRight(List(), List(1)) should be(List(1))
+      List.appendViaFoldRight(List(1, 2), List(3)) should be(List(1, 2, 3))
+    }
+  }
+
 }
