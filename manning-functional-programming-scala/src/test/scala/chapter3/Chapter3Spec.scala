@@ -208,15 +208,80 @@ class Chapter3Spec extends WordSpec with Matchers {
     "apply the provided function to all elements of the list" in {
       List.map(List())(_.toString) shouldEqual List()
       List.map(List(1))(_.toString) shouldEqual List("1")
-      List.map(List(3,5,7))(_.toString) shouldEqual List("3","5","7")
+      List.map(List(3, 5, 7))(_.toString) shouldEqual List("3", "5", "7")
     }
   }
 
   "3.19 filter" must {
     "filter the elements of the list that do not conform to the provided predicate" in {
       List.filter(List[Int]())(x => x % 2 == 0) shouldEqual List()
-      List.filter(List(1,2,3,4,5))(x => x % 2 == 0) shouldEqual List(2,4)
-      List.filter(List(1,3,1,7,5))(x => x % 2 == 0) shouldEqual List()
+      List.filter(List(1, 2, 3, 4, 5))(x => x % 2 == 0) shouldEqual List(2, 4)
+      List.filter(List(1, 3, 1, 7, 5))(x => x % 2 == 0) shouldEqual List()
     }
   }
+
+  "3.20 flatmap" must {
+    "apply function that creates another list from each element and flattens into a final list" in {
+      List.flatMap(List())(i => List(i, i)) shouldEqual List()
+      List.flatMap(List(1, 2, 3))(i => List(i, i)) shouldEqual List(1, 1, 2, 2, 3, 3)
+    }
+  }
+
+  "3.21 filter via flatmap" must {
+    "work" in {
+      List.filterViaFlatMap(List[Int]())(x => x % 2 == 0) shouldEqual List()
+      List.filterViaFlatMap(List(1, 2, 3, 4, 5))(x => x % 2 == 0) shouldEqual List(2, 4)
+      List.filterViaFlatMap(List(1, 3, 1, 7, 5))(x => x % 2 == 0) shouldEqual List()
+    }
+  }
+
+  "3.22 addPairwise" must {
+    "add corresponding elements" in {
+      List.addPairwise(List(1, 2, 3), List(4, 5, 6)) shouldEqual List(5, 7, 9)
+    }
+  }
+
+  "3.23 zipWith" must {
+    "zip corresponding elements with the provided function" in {
+      List.zipWith(List(1, 2, 3), List(4, 5, 6))(_ + _) shouldEqual List(5, 7, 9)
+    }
+  }
+
+  "zipWithIndex" must {
+    "zip elements with index" in {
+
+      List.zipWithIndex(List(), List()) shouldEqual List()
+
+      List.zipWithIndex(List("a", "b"), List("d")) shouldEqual List(
+        (0, "a", "d"),
+      )
+
+      List.zipWithIndex(List("a"), List("d", "e", "f")) shouldEqual List(
+        (0, "a", "d"),
+      )
+
+      List.zipWithIndex(List("a", "b", "c"), List("d", "e", "f")) shouldEqual List(
+        (0, "a", "d"),
+        (1, "b", "e"),
+        (2, "c", "f")
+      )
+    }
+  }
+
+  "3.24 hasSubsequence" must {
+    "check if sub is subsequence of sup" in {
+      List.hasSubsequence(List(), List()) shouldEqual false
+      List.hasSubsequence(List(1), List(1)) shouldEqual true
+      List.hasSubsequence(List(2), List(1)) shouldEqual false
+
+      List.hasSubsequence(List(1, 2, 3, 4), List(1, 2)) shouldEqual true
+      List.hasSubsequence(List(1, 2, 3, 4), List(2, 3)) shouldEqual true
+      List.hasSubsequence(List(1, 2, 3, 4), List(4)) shouldEqual true
+      List.hasSubsequence(List(1, 2, 3, 4), List(5)) shouldEqual false
+      List.hasSubsequence(List(1, 2, 3, 4), List(4, 5)) shouldEqual false
+      List.hasSubsequence(List(1, 2, 3, 4), List(1, 4)) shouldEqual false
+      List.hasSubsequence(List(1, 2, 3, 4), List(1, 2, 3, 4, 5)) shouldEqual false
+    }
+  }
+
 }
