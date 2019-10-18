@@ -136,6 +136,27 @@ object List {
   def appendViaFoldRight[A](appendTo: List[A], more: List[A]): List[A] =
     List.foldRight(appendTo, more)((a,b) => Cons(a, b))
 
-  def flatten[A](l: List[List[A]]): List[A] =
+  def concat[A](l: List[List[A]]): List[A] =
     List.foldLeft(l, List[A]())((b, a) => List.append(b, a))
+
+  def increment(l: List[Int]): List[Int] =
+    l match {
+      case Nil => Nil
+      case Cons(h, t) => Cons(h+1, increment(t))
+    }
+
+  def doubleToString(l: List[Double]): List[String] =
+    l match {
+      case Nil => Nil
+      case Cons(h, t) => Cons(h.toString, doubleToString(t))
+    }
+
+  def map[A,B](as: List[A])(f: A => B): List[B] =
+    as match {
+      case Nil => Nil
+      case Cons(h, t) => Cons(f(h), map(t)(f))
+    }
+
+  def filter[A](as: List[A])(f: A => Boolean): List[A] =
+    List.foldRightViaLeft(as, List[A]())((a,b) => if (f(a)) setHead(b, a) else b)
 }

@@ -176,15 +176,47 @@ class Chapter3Spec extends WordSpec with Matchers {
     }
   }
 
-  "3.15 flatten" must {
+  "3.15 concat" must {
     "flatten nested lists" in {
-      List.flatten(List(List(), List())) should be(List())
-      List.flatten(List(List(1), List())) should be(List(1))
-      List.flatten(List(List(), List(1))) should be(List(1))
-      List.flatten(List(List(1), List(2))) should be(List(1, 2))
-      List.flatten(List(List(1, 2, 3), List(4, 5, 6))) should be(List(1, 2, 3, 4, 5, 6))
-      List.flatten(List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9))) should be(List(1, 2, 3, 4, 5, 6, 7, 8, 9))
+      List.concat(List(List(), List())) should be(List())
+      List.concat(List(List(1), List())) should be(List(1))
+      List.concat(List(List(), List(1))) should be(List(1))
+      List.concat(List(List(1), List(2))) should be(List(1, 2))
+      List.concat(List(List(1, 2, 3), List(4, 5, 6))) should be(List(1, 2, 3, 4, 5, 6))
+      List.concat(List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9))) should be(List(1, 2, 3, 4, 5, 6, 7, 8, 9))
     }
   }
 
+  "3.16 increment" must {
+    "work" in {
+      List.increment(List()) shouldEqual List()
+      List.increment(List(1)) shouldEqual List(2)
+      List.increment(List(1, 2)) shouldEqual List(2, 3)
+      List.increment(List(0, 11, 3)) shouldEqual List(1, 12, 4)
+    }
+  }
+
+  "3.17 double to string" must {
+    "work" in {
+      List.doubleToString(List()) shouldEqual List()
+      List.doubleToString(List(1)) shouldEqual List("1.0")
+      List.doubleToString(List(1, 2)) shouldEqual List("1.0", "2.0")
+    }
+  }
+
+  "3.18 map" must {
+    "apply the provided function to all elements of the list" in {
+      List.map(List())(_.toString) shouldEqual List()
+      List.map(List(1))(_.toString) shouldEqual List("1")
+      List.map(List(3,5,7))(_.toString) shouldEqual List("3","5","7")
+    }
+  }
+
+  "3.19 filter" must {
+    "filter the elements of the list that do not conform to the provided predicate" in {
+      List.filter(List[Int]())(x => x % 2 == 0) shouldEqual List()
+      List.filter(List(1,2,3,4,5))(x => x % 2 == 0) shouldEqual List(2,4)
+      List.filter(List(1,3,1,7,5))(x => x % 2 == 0) shouldEqual List()
+    }
+  }
 }
