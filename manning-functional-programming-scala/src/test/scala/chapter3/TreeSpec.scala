@@ -142,6 +142,116 @@ class TreeSpec extends WordSpec with Matchers {
       )
     }
 
+
+
+
+
+    "know the size2" in {
+      Tree.size2(Leaf("d")) shouldEqual 1
+
+      Tree.size2(Branch(Leaf("d"), Leaf("a"))) shouldEqual 3
+
+      Tree.size2(
+        Branch(
+          Branch(
+            Leaf("d"),
+            Leaf("a")
+          ),
+          Leaf("z")
+        )
+      ) shouldEqual 5
+
+      Tree.size2(
+        Branch(
+          Branch(
+            Leaf("d"),
+            Leaf("a")
+          ),
+          Branch(
+            Leaf("y"),
+            Leaf("z")
+          )
+        )
+      ) shouldEqual 7
+    }
+
+    "compute depth2" in {
+      Tree.depth2(Leaf(0)) shouldEqual 1
+
+      Tree.depth2(Branch(Leaf(0), Leaf(1))) shouldEqual 2
+
+      Tree.depth2(
+        Branch(
+          Branch(
+            Leaf(0),
+            Leaf(1)
+          ),
+          Leaf(2)
+        )
+      ) shouldEqual 3
+
+      Tree.depth2(
+        Branch(
+          Branch(
+            Leaf(3),
+            Leaf(2)
+          ),
+          Branch(
+            Leaf(2),
+            Leaf(4)
+          )
+        )
+      ) shouldEqual 3
+
+      Tree.depth2(
+        Branch(
+          Branch(
+            Leaf(0),
+            Branch(
+              Leaf(0),
+              Branch(
+                Branch(
+                  Leaf(0),
+                  Leaf(1)
+                ),
+                Leaf(1)
+              )
+            )
+          ),
+          Leaf(2)
+        )
+      ) shouldEqual 6
+    }
+
+    "know how to apply a map2 function to its values" in {
+      val func = (i: Int) => i.toString
+      Tree.map2(Leaf(1), func) shouldEqual Leaf("1")
+
+      Tree.map2(Branch(Leaf(1), Leaf(2)), func) shouldEqual Branch(Leaf("1"), Leaf("2"))
+
+      Tree.map2(
+        Branch(
+          Branch(
+            Leaf(1),
+            Leaf(2)
+          ),
+          Branch(
+            Leaf(3),
+            Leaf(4)
+          )
+        )
+        , func) shouldEqual Branch(
+        Branch(
+          Leaf("1"),
+          Leaf("2")
+        ),
+        Branch(
+          Leaf("3"),
+          Leaf("4")
+        )
+      )
+    }
+
   }
 
 }
