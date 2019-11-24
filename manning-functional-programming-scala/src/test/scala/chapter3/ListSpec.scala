@@ -3,7 +3,7 @@ package chapter3
 import org.scalatest.{Matchers, WordSpec}
 import List._
 
-class Chapter3Spec extends WordSpec with Matchers {
+class ListSpec extends WordSpec with Matchers {
 
   "3.1" must {
     "be" in {
