@@ -81,8 +81,8 @@ object List {
   def init[A](l: List[A]): List[A] =
     l match {
       case Nil => Nil
-      case Cons(h, Nil) => List(h)
-      case Cons(h, t) => init(t)
+      case Cons(_ , Nil) => Nil
+      case Cons(h, t) => Cons(h, init(t))
     }
 
   def foldRight[A, B](as: List[A], z: B)(f: (A, B) => B): B =

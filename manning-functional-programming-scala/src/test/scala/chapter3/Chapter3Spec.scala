@@ -106,11 +106,11 @@ class Chapter3Spec extends WordSpec with Matchers {
 
   "3.6 init" must {
 
-    "return a list all but the last element" in {
+    "return a list with all but the last element" in {
       List.init(List()) should be(List())
-      List.init(List(1)) should be(List(1))
-      List.init(List(1, 2)) should be(List(2))
-      List.init(List(3, 5, 1)) should be(List(1))
+      List.init(List(1)) should be(List())
+      List.init(List(1, 2)) should be(List(1))
+      List.init(List(3, 5, 1)) should be(List(3,5))
     }
 
   }
@@ -283,5 +283,7 @@ class Chapter3Spec extends WordSpec with Matchers {
       List.hasSubsequence(List(1, 2, 3, 4), List(1, 2, 3, 4, 5)) shouldEqual false
     }
   }
+
+
 
 }
