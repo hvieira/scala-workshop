@@ -1,4 +1,4 @@
-package katas
+package katas.binarysearch.impl1
 
 object BinarySearch {
 
