@@ -2,3 +2,6 @@
 *.log
 .idea
 target/
+.attach_pid*
+.metals
+.vscode
